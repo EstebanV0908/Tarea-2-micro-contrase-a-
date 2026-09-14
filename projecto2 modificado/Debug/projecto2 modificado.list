@@ -1,0 +1,1469 @@
+
+projecto2 modificado.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .isr_vector   00000188  08000000  08000000  00001000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .text         000008d8  08000188  08000188  00001188  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .rodata       000000b8  08000a60  08000a60  00001a60  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .ARM.extab    00000000  08000b18  08000b18  0000200c  2**0
+                  CONTENTS, READONLY
+  4 .ARM          00000000  08000b18  08000b18  0000200c  2**0
+                  CONTENTS, READONLY
+  5 .preinit_array 00000000  08000b18  08000b18  0000200c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  6 .init_array   00000004  08000b18  08000b18  00001b18  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  7 .fini_array   00000004  08000b1c  08000b1c  00001b1c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  8 .data         0000000c  20000000  08000b20  00002000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  9 .ccmram       00000000  10000000  10000000  0000200c  2**0
+                  CONTENTS
+ 10 .bss          00000040  2000000c  2000000c  0000200c  2**2
+                  ALLOC
+ 11 ._user_heap_stack 00000604  2000004c  2000004c  0000200c  2**0
+                  ALLOC
+ 12 .ARM.attributes 00000030  00000000  00000000  0000200c  2**0
+                  CONTENTS, READONLY
+ 13 .debug_info   000006b0  00000000  00000000  0000203c  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_abbrev 00000223  00000000  00000000  000026ec  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 15 .debug_aranges 00000080  00000000  00000000  00002910  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 16 .debug_rnglists 0000005a  00000000  00000000  00002990  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 17 .debug_macro  000181db  00000000  00000000  000029ea  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 18 .debug_line   00000a9a  00000000  00000000  0001abc5  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 19 .debug_str    000885fe  00000000  00000000  0001b65f  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 20 .comment      00000043  00000000  00000000  000a3c5d  2**0
+                  CONTENTS, READONLY
+ 21 .debug_frame  0000014c  00000000  00000000  000a3ca0  2**2
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 22 .debug_line_str 00000067  00000000  00000000  000a3dec  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+
+Disassembly of section .text:
+
+08000188 <__do_global_dtors_aux>:
+ 8000188:	b510      	push	{r4, lr}
+ 800018a:	4c05      	ldr	r4, [pc, #20]	@ (80001a0 <__do_global_dtors_aux+0x18>)
+ 800018c:	7823      	ldrb	r3, [r4, #0]
+ 800018e:	b933      	cbnz	r3, 800019e <__do_global_dtors_aux+0x16>
+ 8000190:	4b04      	ldr	r3, [pc, #16]	@ (80001a4 <__do_global_dtors_aux+0x1c>)
+ 8000192:	b113      	cbz	r3, 800019a <__do_global_dtors_aux+0x12>
+ 8000194:	4804      	ldr	r0, [pc, #16]	@ (80001a8 <__do_global_dtors_aux+0x20>)
+ 8000196:	f3af 8000 	nop.w
+ 800019a:	2301      	movs	r3, #1
+ 800019c:	7023      	strb	r3, [r4, #0]
+ 800019e:	bd10      	pop	{r4, pc}
+ 80001a0:	2000000c 	.word	0x2000000c
+ 80001a4:	00000000 	.word	0x00000000
+ 80001a8:	08000a48 	.word	0x08000a48
+
+080001ac <frame_dummy>:
+ 80001ac:	b508      	push	{r3, lr}
+ 80001ae:	4b03      	ldr	r3, [pc, #12]	@ (80001bc <frame_dummy+0x10>)
+ 80001b0:	b11b      	cbz	r3, 80001ba <frame_dummy+0xe>
+ 80001b2:	4903      	ldr	r1, [pc, #12]	@ (80001c0 <frame_dummy+0x14>)
+ 80001b4:	4803      	ldr	r0, [pc, #12]	@ (80001c4 <frame_dummy+0x18>)
+ 80001b6:	f3af 8000 	nop.w
+ 80001ba:	bd08      	pop	{r3, pc}
+ 80001bc:	00000000 	.word	0x00000000
+ 80001c0:	20000010 	.word	0x20000010
+ 80001c4:	08000a48 	.word	0x08000a48
+
+080001c8 <main>:
+
+char last_valid_key = '\0';
+
+
+
+int main(void) {
+ 80001c8:	b580      	push	{r7, lr}
+ 80001ca:	b082      	sub	sp, #8
+ 80001cc:	af00      	add	r7, sp, #0
+    Pins_Init();
+ 80001ce:	f000 f99f 	bl	8000510 <Pins_Init>
+    SysTick_Init();
+ 80001d2:	f000 fb5b 	bl	800088c <SysTick_Init>
+    int a = ms_ticks;
+ 80001d6:	4b0a      	ldr	r3, [pc, #40]	@ (8000200 <main+0x38>)
+ 80001d8:	681b      	ldr	r3, [r3, #0]
+ 80001da:	607b      	str	r3, [r7, #4]
+        while (1) {
+
+
+        	maquina2();
+ 80001dc:	f000 f814 	bl	8000208 <maquina2>
+
+            if (ms_ticks-a >= 1 && h==0) {
+ 80001e0:	4b07      	ldr	r3, [pc, #28]	@ (8000200 <main+0x38>)
+ 80001e2:	681a      	ldr	r2, [r3, #0]
+ 80001e4:	687b      	ldr	r3, [r7, #4]
+ 80001e6:	429a      	cmp	r2, r3
+ 80001e8:	d0f8      	beq.n	80001dc <main+0x14>
+ 80001ea:	4b06      	ldr	r3, [pc, #24]	@ (8000204 <main+0x3c>)
+ 80001ec:	681b      	ldr	r3, [r3, #0]
+ 80001ee:	2b00      	cmp	r3, #0
+ 80001f0:	d1f4      	bne.n	80001dc <main+0x14>
+
+            	Figuras();
+ 80001f2:	f000 fa03 	bl	80005fc <Figuras>
+                a = ms_ticks;
+ 80001f6:	4b02      	ldr	r3, [pc, #8]	@ (8000200 <main+0x38>)
+ 80001f8:	681b      	ldr	r3, [r3, #0]
+ 80001fa:	607b      	str	r3, [r7, #4]
+        	maquina2();
+ 80001fc:	e7ee      	b.n	80001dc <main+0x14>
+ 80001fe:	bf00      	nop
+ 8000200:	20000028 	.word	0x20000028
+ 8000204:	2000002c 	.word	0x2000002c
+
+08000208 <maquina2>:
+
+
+        }
+}
+
+void maquina2(void){
+ 8000208:	b580      	push	{r7, lr}
+ 800020a:	b082      	sub	sp, #8
+ 800020c:	af00      	add	r7, sp, #0
+	char tecla = '\0';
+ 800020e:	2300      	movs	r3, #0
+ 8000210:	71fb      	strb	r3, [r7, #7]
+	if(h==0) tecla = Keypad_Read_Debounced();
+ 8000212:	4b91      	ldr	r3, [pc, #580]	@ (8000458 <maquina2+0x250>)
+ 8000214:	681b      	ldr	r3, [r3, #0]
+ 8000216:	2b00      	cmp	r3, #0
+ 8000218:	d103      	bne.n	8000222 <maquina2+0x1a>
+ 800021a:	f000 fb59 	bl	80008d0 <Keypad_Read_Debounced>
+ 800021e:	4603      	mov	r3, r0
+ 8000220:	71fb      	strb	r3, [r7, #7]
+
+
+	switch (estado) {
+ 8000222:	4b8e      	ldr	r3, [pc, #568]	@ (800045c <maquina2+0x254>)
+ 8000224:	781b      	ldrb	r3, [r3, #0]
+ 8000226:	2b05      	cmp	r3, #5
+ 8000228:	f200 8160 	bhi.w	80004ec <maquina2+0x2e4>
+ 800022c:	a201      	add	r2, pc, #4	@ (adr r2, 8000234 <maquina2+0x2c>)
+ 800022e:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 8000232:	bf00      	nop
+ 8000234:	0800024d 	.word	0x0800024d
+ 8000238:	08000299 	.word	0x08000299
+ 800023c:	08000327 	.word	0x08000327
+ 8000240:	0800039b 	.word	0x0800039b
+ 8000244:	080003fd 	.word	0x080003fd
+ 8000248:	08000481 	.word	0x08000481
+
+		case estado_inicial:
+			if (tecla != '\0') {
+ 800024c:	79fb      	ldrb	r3, [r7, #7]
+ 800024e:	2b00      	cmp	r3, #0
+ 8000250:	d015      	beq.n	800027e <maquina2+0x76>
+				tem = ms_ticks; // Registrar marca de tiempo
+ 8000252:	4b83      	ldr	r3, [pc, #524]	@ (8000460 <maquina2+0x258>)
+ 8000254:	681b      	ldr	r3, [r3, #0]
+ 8000256:	4a83      	ldr	r2, [pc, #524]	@ (8000464 <maquina2+0x25c>)
+ 8000258:	6013      	str	r3, [r2, #0]
+				v[count]= tecla;
+ 800025a:	4b83      	ldr	r3, [pc, #524]	@ (8000468 <maquina2+0x260>)
+ 800025c:	681b      	ldr	r3, [r3, #0]
+ 800025e:	4983      	ldr	r1, [pc, #524]	@ (800046c <maquina2+0x264>)
+ 8000260:	79fa      	ldrb	r2, [r7, #7]
+ 8000262:	54ca      	strb	r2, [r1, r3]
+				if (count == 3) {
+ 8000264:	4b80      	ldr	r3, [pc, #512]	@ (8000468 <maquina2+0x260>)
+ 8000266:	681b      	ldr	r3, [r3, #0]
+ 8000268:	2b03      	cmp	r3, #3
+ 800026a:	d103      	bne.n	8000274 <maquina2+0x6c>
+					estado=estado_guardando;
+ 800026c:	4b7b      	ldr	r3, [pc, #492]	@ (800045c <maquina2+0x254>)
+ 800026e:	2201      	movs	r2, #1
+ 8000270:	701a      	strb	r2, [r3, #0]
+				break;
+ 8000272:	e13b      	b.n	80004ec <maquina2+0x2e4>
+				}
+				count++;
+ 8000274:	4b7c      	ldr	r3, [pc, #496]	@ (8000468 <maquina2+0x260>)
+ 8000276:	681b      	ldr	r3, [r3, #0]
+ 8000278:	3301      	adds	r3, #1
+ 800027a:	4a7b      	ldr	r2, [pc, #492]	@ (8000468 <maquina2+0x260>)
+ 800027c:	6013      	str	r3, [r2, #0]
+			}
+			if(ms_ticks-tem >= 600){
+ 800027e:	4b78      	ldr	r3, [pc, #480]	@ (8000460 <maquina2+0x258>)
+ 8000280:	681a      	ldr	r2, [r3, #0]
+ 8000282:	4b78      	ldr	r3, [pc, #480]	@ (8000464 <maquina2+0x25c>)
+ 8000284:	681b      	ldr	r3, [r3, #0]
+ 8000286:	1ad3      	subs	r3, r2, r3
+ 8000288:	f5b3 7f16 	cmp.w	r3, #600	@ 0x258
+ 800028c:	f0c0 8125 	bcc.w	80004da <maquina2+0x2d2>
+				b=16;
+ 8000290:	4b77      	ldr	r3, [pc, #476]	@ (8000470 <maquina2+0x268>)
+ 8000292:	2210      	movs	r2, #16
+ 8000294:	601a      	str	r2, [r3, #0]
+					}
+			break;
+ 8000296:	e120      	b.n	80004da <maquina2+0x2d2>
+
+		case estado_guardando:
+			// Si han pasado 20ms
+			if ((ms_ticks - tem) >= DEBOUNCE_DELAY_MS) {
+ 8000298:	4b71      	ldr	r3, [pc, #452]	@ (8000460 <maquina2+0x258>)
+ 800029a:	681a      	ldr	r2, [r3, #0]
+ 800029c:	4b71      	ldr	r3, [pc, #452]	@ (8000464 <maquina2+0x25c>)
+ 800029e:	681b      	ldr	r3, [r3, #0]
+ 80002a0:	1ad3      	subs	r3, r2, r3
+ 80002a2:	2b13      	cmp	r3, #19
+ 80002a4:	f240 811b 	bls.w	80004de <maquina2+0x2d6>
+
+				if (count == 3 && v[0] == contra[0] && v[1] == contra[1] && v[2] == contra[2] && v[3] == contra[3]) {
+ 80002a8:	4b6f      	ldr	r3, [pc, #444]	@ (8000468 <maquina2+0x260>)
+ 80002aa:	681b      	ldr	r3, [r3, #0]
+ 80002ac:	2b03      	cmp	r3, #3
+ 80002ae:	d11b      	bne.n	80002e8 <maquina2+0xe0>
+ 80002b0:	4b6e      	ldr	r3, [pc, #440]	@ (800046c <maquina2+0x264>)
+ 80002b2:	781a      	ldrb	r2, [r3, #0]
+ 80002b4:	4b6f      	ldr	r3, [pc, #444]	@ (8000474 <maquina2+0x26c>)
+ 80002b6:	781b      	ldrb	r3, [r3, #0]
+ 80002b8:	429a      	cmp	r2, r3
+ 80002ba:	d115      	bne.n	80002e8 <maquina2+0xe0>
+ 80002bc:	4b6b      	ldr	r3, [pc, #428]	@ (800046c <maquina2+0x264>)
+ 80002be:	785a      	ldrb	r2, [r3, #1]
+ 80002c0:	4b6c      	ldr	r3, [pc, #432]	@ (8000474 <maquina2+0x26c>)
+ 80002c2:	785b      	ldrb	r3, [r3, #1]
+ 80002c4:	429a      	cmp	r2, r3
+ 80002c6:	d10f      	bne.n	80002e8 <maquina2+0xe0>
+ 80002c8:	4b68      	ldr	r3, [pc, #416]	@ (800046c <maquina2+0x264>)
+ 80002ca:	789a      	ldrb	r2, [r3, #2]
+ 80002cc:	4b69      	ldr	r3, [pc, #420]	@ (8000474 <maquina2+0x26c>)
+ 80002ce:	789b      	ldrb	r3, [r3, #2]
+ 80002d0:	429a      	cmp	r2, r3
+ 80002d2:	d109      	bne.n	80002e8 <maquina2+0xe0>
+ 80002d4:	4b65      	ldr	r3, [pc, #404]	@ (800046c <maquina2+0x264>)
+ 80002d6:	78da      	ldrb	r2, [r3, #3]
+ 80002d8:	4b66      	ldr	r3, [pc, #408]	@ (8000474 <maquina2+0x26c>)
+ 80002da:	78db      	ldrb	r3, [r3, #3]
+ 80002dc:	429a      	cmp	r2, r3
+ 80002de:	d103      	bne.n	80002e8 <maquina2+0xe0>
+					 // ¡Tecla validada!
+					estado = estado_correcto;
+ 80002e0:	4b5e      	ldr	r3, [pc, #376]	@ (800045c <maquina2+0x254>)
+ 80002e2:	2203      	movs	r2, #3
+ 80002e4:	701a      	strb	r2, [r3, #0]
+ 80002e6:	e01d      	b.n	8000324 <maquina2+0x11c>
+				}else if(count == 3 && v[0] == v[1] && v[1] == v[2] && v[2] == v[3]){
+ 80002e8:	4b5f      	ldr	r3, [pc, #380]	@ (8000468 <maquina2+0x260>)
+ 80002ea:	681b      	ldr	r3, [r3, #0]
+ 80002ec:	2b03      	cmp	r3, #3
+ 80002ee:	d115      	bne.n	800031c <maquina2+0x114>
+ 80002f0:	4b5e      	ldr	r3, [pc, #376]	@ (800046c <maquina2+0x264>)
+ 80002f2:	781a      	ldrb	r2, [r3, #0]
+ 80002f4:	4b5d      	ldr	r3, [pc, #372]	@ (800046c <maquina2+0x264>)
+ 80002f6:	785b      	ldrb	r3, [r3, #1]
+ 80002f8:	429a      	cmp	r2, r3
+ 80002fa:	d10f      	bne.n	800031c <maquina2+0x114>
+ 80002fc:	4b5b      	ldr	r3, [pc, #364]	@ (800046c <maquina2+0x264>)
+ 80002fe:	785a      	ldrb	r2, [r3, #1]
+ 8000300:	4b5a      	ldr	r3, [pc, #360]	@ (800046c <maquina2+0x264>)
+ 8000302:	789b      	ldrb	r3, [r3, #2]
+ 8000304:	429a      	cmp	r2, r3
+ 8000306:	d109      	bne.n	800031c <maquina2+0x114>
+ 8000308:	4b58      	ldr	r3, [pc, #352]	@ (800046c <maquina2+0x264>)
+ 800030a:	789a      	ldrb	r2, [r3, #2]
+ 800030c:	4b57      	ldr	r3, [pc, #348]	@ (800046c <maquina2+0x264>)
+ 800030e:	78db      	ldrb	r3, [r3, #3]
+ 8000310:	429a      	cmp	r2, r3
+ 8000312:	d103      	bne.n	800031c <maquina2+0x114>
+					estado = easter_egg;
+ 8000314:	4b51      	ldr	r3, [pc, #324]	@ (800045c <maquina2+0x254>)
+ 8000316:	2205      	movs	r2, #5
+ 8000318:	701a      	strb	r2, [r3, #0]
+ 800031a:	e003      	b.n	8000324 <maquina2+0x11c>
+				}
+				else{
+					// Fue un pico de ruido o se soltó rápido
+					estado = estado_error;
+ 800031c:	4b4f      	ldr	r3, [pc, #316]	@ (800045c <maquina2+0x254>)
+ 800031e:	2202      	movs	r2, #2
+ 8000320:	701a      	strb	r2, [r3, #0]
+				}
+			}
+			break;
+ 8000322:	e0dc      	b.n	80004de <maquina2+0x2d6>
+ 8000324:	e0db      	b.n	80004de <maquina2+0x2d6>
+
+		case estado_error:
+			if((ms_ticks-tem) <= 3000){
+ 8000326:	4b4e      	ldr	r3, [pc, #312]	@ (8000460 <maquina2+0x258>)
+ 8000328:	681a      	ldr	r2, [r3, #0]
+ 800032a:	4b4e      	ldr	r3, [pc, #312]	@ (8000464 <maquina2+0x25c>)
+ 800032c:	681b      	ldr	r3, [r3, #0]
+ 800032e:	1ad3      	subs	r3, r2, r3
+ 8000330:	f640 32b8 	movw	r2, #3000	@ 0xbb8
+ 8000334:	4293      	cmp	r3, r2
+ 8000336:	d80f      	bhi.n	8000358 <maquina2+0x150>
+				if((ms_ticks-debounce_timer)>=1){
+ 8000338:	4b49      	ldr	r3, [pc, #292]	@ (8000460 <maquina2+0x258>)
+ 800033a:	681a      	ldr	r2, [r3, #0]
+ 800033c:	4b4e      	ldr	r3, [pc, #312]	@ (8000478 <maquina2+0x270>)
+ 800033e:	681b      	ldr	r3, [r3, #0]
+ 8000340:	429a      	cmp	r2, r3
+ 8000342:	f000 80ce 	beq.w	80004e2 <maquina2+0x2da>
+				h=1;
+ 8000346:	4b44      	ldr	r3, [pc, #272]	@ (8000458 <maquina2+0x250>)
+ 8000348:	2201      	movs	r2, #1
+ 800034a:	601a      	str	r2, [r3, #0]
+				b=17;
+ 800034c:	4b48      	ldr	r3, [pc, #288]	@ (8000470 <maquina2+0x268>)
+ 800034e:	2211      	movs	r2, #17
+ 8000350:	601a      	str	r2, [r3, #0]
+				Figuras();
+ 8000352:	f000 f953 	bl	80005fc <Figuras>
+				h=0;
+				b=16;
+				count=0;
+				f++;}
+			}
+			break;
+ 8000356:	e0c4      	b.n	80004e2 <maquina2+0x2da>
+				tem=ms_ticks;
+ 8000358:	4b41      	ldr	r3, [pc, #260]	@ (8000460 <maquina2+0x258>)
+ 800035a:	681b      	ldr	r3, [r3, #0]
+ 800035c:	4a41      	ldr	r2, [pc, #260]	@ (8000464 <maquina2+0x25c>)
+ 800035e:	6013      	str	r3, [r2, #0]
+				if(f==3){
+ 8000360:	4b46      	ldr	r3, [pc, #280]	@ (800047c <maquina2+0x274>)
+ 8000362:	681b      	ldr	r3, [r3, #0]
+ 8000364:	2b03      	cmp	r3, #3
+ 8000366:	d106      	bne.n	8000376 <maquina2+0x16e>
+				estado=estado_peligro;
+ 8000368:	4b3c      	ldr	r3, [pc, #240]	@ (800045c <maquina2+0x254>)
+ 800036a:	2204      	movs	r2, #4
+ 800036c:	701a      	strb	r2, [r3, #0]
+				f=1;
+ 800036e:	4b43      	ldr	r3, [pc, #268]	@ (800047c <maquina2+0x274>)
+ 8000370:	2201      	movs	r2, #1
+ 8000372:	601a      	str	r2, [r3, #0]
+			break;
+ 8000374:	e0b5      	b.n	80004e2 <maquina2+0x2da>
+				estado=estado_inicial;
+ 8000376:	4b39      	ldr	r3, [pc, #228]	@ (800045c <maquina2+0x254>)
+ 8000378:	2200      	movs	r2, #0
+ 800037a:	701a      	strb	r2, [r3, #0]
+				h=0;
+ 800037c:	4b36      	ldr	r3, [pc, #216]	@ (8000458 <maquina2+0x250>)
+ 800037e:	2200      	movs	r2, #0
+ 8000380:	601a      	str	r2, [r3, #0]
+				b=16;
+ 8000382:	4b3b      	ldr	r3, [pc, #236]	@ (8000470 <maquina2+0x268>)
+ 8000384:	2210      	movs	r2, #16
+ 8000386:	601a      	str	r2, [r3, #0]
+				count=0;
+ 8000388:	4b37      	ldr	r3, [pc, #220]	@ (8000468 <maquina2+0x260>)
+ 800038a:	2200      	movs	r2, #0
+ 800038c:	601a      	str	r2, [r3, #0]
+				f++;}
+ 800038e:	4b3b      	ldr	r3, [pc, #236]	@ (800047c <maquina2+0x274>)
+ 8000390:	681b      	ldr	r3, [r3, #0]
+ 8000392:	3301      	adds	r3, #1
+ 8000394:	4a39      	ldr	r2, [pc, #228]	@ (800047c <maquina2+0x274>)
+ 8000396:	6013      	str	r3, [r2, #0]
+			break;
+ 8000398:	e0a3      	b.n	80004e2 <maquina2+0x2da>
+
+		case estado_correcto:
+			if((ms_ticks-tem) <= 3000){
+ 800039a:	4b31      	ldr	r3, [pc, #196]	@ (8000460 <maquina2+0x258>)
+ 800039c:	681a      	ldr	r2, [r3, #0]
+ 800039e:	4b31      	ldr	r3, [pc, #196]	@ (8000464 <maquina2+0x25c>)
+ 80003a0:	681b      	ldr	r3, [r3, #0]
+ 80003a2:	1ad3      	subs	r3, r2, r3
+ 80003a4:	f640 32b8 	movw	r2, #3000	@ 0xbb8
+ 80003a8:	4293      	cmp	r3, r2
+ 80003aa:	d813      	bhi.n	80003d4 <maquina2+0x1cc>
+				if((ms_ticks-debounce_timer)>=1){
+ 80003ac:	4b2c      	ldr	r3, [pc, #176]	@ (8000460 <maquina2+0x258>)
+ 80003ae:	681a      	ldr	r2, [r3, #0]
+ 80003b0:	4b31      	ldr	r3, [pc, #196]	@ (8000478 <maquina2+0x270>)
+ 80003b2:	681b      	ldr	r3, [r3, #0]
+ 80003b4:	429a      	cmp	r2, r3
+ 80003b6:	f000 8096 	beq.w	80004e6 <maquina2+0x2de>
+				h=1;
+ 80003ba:	4b27      	ldr	r3, [pc, #156]	@ (8000458 <maquina2+0x250>)
+ 80003bc:	2201      	movs	r2, #1
+ 80003be:	601a      	str	r2, [r3, #0]
+				b=18;
+ 80003c0:	4b2b      	ldr	r3, [pc, #172]	@ (8000470 <maquina2+0x268>)
+ 80003c2:	2212      	movs	r2, #18
+ 80003c4:	601a      	str	r2, [r3, #0]
+				Figuras();
+ 80003c6:	f000 f919 	bl	80005fc <Figuras>
+				debounce_timer=ms_ticks;
+ 80003ca:	4b25      	ldr	r3, [pc, #148]	@ (8000460 <maquina2+0x258>)
+ 80003cc:	681b      	ldr	r3, [r3, #0]
+ 80003ce:	4a2a      	ldr	r2, [pc, #168]	@ (8000478 <maquina2+0x270>)
+ 80003d0:	6013      	str	r3, [r2, #0]
+				b=16;
+				f=1;
+				count=0;
+				}
+
+			break;
+ 80003d2:	e088      	b.n	80004e6 <maquina2+0x2de>
+				tem=ms_ticks;
+ 80003d4:	4b22      	ldr	r3, [pc, #136]	@ (8000460 <maquina2+0x258>)
+ 80003d6:	681b      	ldr	r3, [r3, #0]
+ 80003d8:	4a22      	ldr	r2, [pc, #136]	@ (8000464 <maquina2+0x25c>)
+ 80003da:	6013      	str	r3, [r2, #0]
+				estado=estado_inicial;
+ 80003dc:	4b1f      	ldr	r3, [pc, #124]	@ (800045c <maquina2+0x254>)
+ 80003de:	2200      	movs	r2, #0
+ 80003e0:	701a      	strb	r2, [r3, #0]
+				h=0;
+ 80003e2:	4b1d      	ldr	r3, [pc, #116]	@ (8000458 <maquina2+0x250>)
+ 80003e4:	2200      	movs	r2, #0
+ 80003e6:	601a      	str	r2, [r3, #0]
+				b=16;
+ 80003e8:	4b21      	ldr	r3, [pc, #132]	@ (8000470 <maquina2+0x268>)
+ 80003ea:	2210      	movs	r2, #16
+ 80003ec:	601a      	str	r2, [r3, #0]
+				f=1;
+ 80003ee:	4b23      	ldr	r3, [pc, #140]	@ (800047c <maquina2+0x274>)
+ 80003f0:	2201      	movs	r2, #1
+ 80003f2:	601a      	str	r2, [r3, #0]
+				count=0;
+ 80003f4:	4b1c      	ldr	r3, [pc, #112]	@ (8000468 <maquina2+0x260>)
+ 80003f6:	2200      	movs	r2, #0
+ 80003f8:	601a      	str	r2, [r3, #0]
+			break;
+ 80003fa:	e074      	b.n	80004e6 <maquina2+0x2de>
+
+		case estado_peligro:
+			if((ms_ticks-tem) <= 10000){
+ 80003fc:	4b18      	ldr	r3, [pc, #96]	@ (8000460 <maquina2+0x258>)
+ 80003fe:	681a      	ldr	r2, [r3, #0]
+ 8000400:	4b18      	ldr	r3, [pc, #96]	@ (8000464 <maquina2+0x25c>)
+ 8000402:	681b      	ldr	r3, [r3, #0]
+ 8000404:	1ad3      	subs	r3, r2, r3
+ 8000406:	f242 7210 	movw	r2, #10000	@ 0x2710
+ 800040a:	4293      	cmp	r3, r2
+ 800040c:	d812      	bhi.n	8000434 <maquina2+0x22c>
+				if((ms_ticks-debounce_timer)>=1){
+ 800040e:	4b14      	ldr	r3, [pc, #80]	@ (8000460 <maquina2+0x258>)
+ 8000410:	681a      	ldr	r2, [r3, #0]
+ 8000412:	4b19      	ldr	r3, [pc, #100]	@ (8000478 <maquina2+0x270>)
+ 8000414:	681b      	ldr	r3, [r3, #0]
+ 8000416:	429a      	cmp	r2, r3
+ 8000418:	d067      	beq.n	80004ea <maquina2+0x2e2>
+				h=1;
+ 800041a:	4b0f      	ldr	r3, [pc, #60]	@ (8000458 <maquina2+0x250>)
+ 800041c:	2201      	movs	r2, #1
+ 800041e:	601a      	str	r2, [r3, #0]
+				b=19;
+ 8000420:	4b13      	ldr	r3, [pc, #76]	@ (8000470 <maquina2+0x268>)
+ 8000422:	2213      	movs	r2, #19
+ 8000424:	601a      	str	r2, [r3, #0]
+				Figuras();
+ 8000426:	f000 f8e9 	bl	80005fc <Figuras>
+				debounce_timer=ms_ticks;
+ 800042a:	4b0d      	ldr	r3, [pc, #52]	@ (8000460 <maquina2+0x258>)
+ 800042c:	681b      	ldr	r3, [r3, #0]
+ 800042e:	4a12      	ldr	r2, [pc, #72]	@ (8000478 <maquina2+0x270>)
+ 8000430:	6013      	str	r3, [r2, #0]
+				estado=estado_inicial;
+				h=0;
+				b=16;
+				count=0;
+				}
+			break;
+ 8000432:	e05a      	b.n	80004ea <maquina2+0x2e2>
+				tem=ms_ticks;
+ 8000434:	4b0a      	ldr	r3, [pc, #40]	@ (8000460 <maquina2+0x258>)
+ 8000436:	681b      	ldr	r3, [r3, #0]
+ 8000438:	4a0a      	ldr	r2, [pc, #40]	@ (8000464 <maquina2+0x25c>)
+ 800043a:	6013      	str	r3, [r2, #0]
+				estado=estado_inicial;
+ 800043c:	4b07      	ldr	r3, [pc, #28]	@ (800045c <maquina2+0x254>)
+ 800043e:	2200      	movs	r2, #0
+ 8000440:	701a      	strb	r2, [r3, #0]
+				h=0;
+ 8000442:	4b05      	ldr	r3, [pc, #20]	@ (8000458 <maquina2+0x250>)
+ 8000444:	2200      	movs	r2, #0
+ 8000446:	601a      	str	r2, [r3, #0]
+				b=16;
+ 8000448:	4b09      	ldr	r3, [pc, #36]	@ (8000470 <maquina2+0x268>)
+ 800044a:	2210      	movs	r2, #16
+ 800044c:	601a      	str	r2, [r3, #0]
+				count=0;
+ 800044e:	4b06      	ldr	r3, [pc, #24]	@ (8000468 <maquina2+0x260>)
+ 8000450:	2200      	movs	r2, #0
+ 8000452:	601a      	str	r2, [r3, #0]
+			break;
+ 8000454:	e049      	b.n	80004ea <maquina2+0x2e2>
+ 8000456:	bf00      	nop
+ 8000458:	2000002c 	.word	0x2000002c
+ 800045c:	20000048 	.word	0x20000048
+ 8000460:	20000028 	.word	0x20000028
+ 8000464:	20000044 	.word	0x20000044
+ 8000468:	20000034 	.word	0x20000034
+ 800046c:	20000038 	.word	0x20000038
+ 8000470:	20000000 	.word	0x20000000
+ 8000474:	20000004 	.word	0x20000004
+ 8000478:	20000040 	.word	0x20000040
+ 800047c:	20000008 	.word	0x20000008
+		case easter_egg:
+				if((ms_ticks-tem) <= 3000){
+ 8000480:	4b1c      	ldr	r3, [pc, #112]	@ (80004f4 <maquina2+0x2ec>)
+ 8000482:	681a      	ldr	r2, [r3, #0]
+ 8000484:	4b1c      	ldr	r3, [pc, #112]	@ (80004f8 <maquina2+0x2f0>)
+ 8000486:	681b      	ldr	r3, [r3, #0]
+ 8000488:	1ad3      	subs	r3, r2, r3
+ 800048a:	f640 32b8 	movw	r2, #3000	@ 0xbb8
+ 800048e:	4293      	cmp	r3, r2
+ 8000490:	d812      	bhi.n	80004b8 <maquina2+0x2b0>
+					if((ms_ticks-debounce_timer)>=1){
+ 8000492:	4b18      	ldr	r3, [pc, #96]	@ (80004f4 <maquina2+0x2ec>)
+ 8000494:	681a      	ldr	r2, [r3, #0]
+ 8000496:	4b19      	ldr	r3, [pc, #100]	@ (80004fc <maquina2+0x2f4>)
+ 8000498:	681b      	ldr	r3, [r3, #0]
+ 800049a:	429a      	cmp	r2, r3
+ 800049c:	d026      	beq.n	80004ec <maquina2+0x2e4>
+					h=1;
+ 800049e:	4b18      	ldr	r3, [pc, #96]	@ (8000500 <maquina2+0x2f8>)
+ 80004a0:	2201      	movs	r2, #1
+ 80004a2:	601a      	str	r2, [r3, #0]
+					b=20;
+ 80004a4:	4b17      	ldr	r3, [pc, #92]	@ (8000504 <maquina2+0x2fc>)
+ 80004a6:	2214      	movs	r2, #20
+ 80004a8:	601a      	str	r2, [r3, #0]
+					Figuras();
+ 80004aa:	f000 f8a7 	bl	80005fc <Figuras>
+					debounce_timer=ms_ticks;
+ 80004ae:	4b11      	ldr	r3, [pc, #68]	@ (80004f4 <maquina2+0x2ec>)
+ 80004b0:	681b      	ldr	r3, [r3, #0]
+ 80004b2:	4a12      	ldr	r2, [pc, #72]	@ (80004fc <maquina2+0x2f4>)
+ 80004b4:	6013      	str	r3, [r2, #0]
+					b=16;
+					count=0;
+					}
+	}
+
+}
+ 80004b6:	e019      	b.n	80004ec <maquina2+0x2e4>
+					tem=ms_ticks;
+ 80004b8:	4b0e      	ldr	r3, [pc, #56]	@ (80004f4 <maquina2+0x2ec>)
+ 80004ba:	681b      	ldr	r3, [r3, #0]
+ 80004bc:	4a0e      	ldr	r2, [pc, #56]	@ (80004f8 <maquina2+0x2f0>)
+ 80004be:	6013      	str	r3, [r2, #0]
+					estado=estado_inicial;
+ 80004c0:	4b11      	ldr	r3, [pc, #68]	@ (8000508 <maquina2+0x300>)
+ 80004c2:	2200      	movs	r2, #0
+ 80004c4:	701a      	strb	r2, [r3, #0]
+					h=0;
+ 80004c6:	4b0e      	ldr	r3, [pc, #56]	@ (8000500 <maquina2+0x2f8>)
+ 80004c8:	2200      	movs	r2, #0
+ 80004ca:	601a      	str	r2, [r3, #0]
+					b=16;
+ 80004cc:	4b0d      	ldr	r3, [pc, #52]	@ (8000504 <maquina2+0x2fc>)
+ 80004ce:	2210      	movs	r2, #16
+ 80004d0:	601a      	str	r2, [r3, #0]
+					count=0;
+ 80004d2:	4b0e      	ldr	r3, [pc, #56]	@ (800050c <maquina2+0x304>)
+ 80004d4:	2200      	movs	r2, #0
+ 80004d6:	601a      	str	r2, [r3, #0]
+}
+ 80004d8:	e008      	b.n	80004ec <maquina2+0x2e4>
+			break;
+ 80004da:	bf00      	nop
+ 80004dc:	e006      	b.n	80004ec <maquina2+0x2e4>
+			break;
+ 80004de:	bf00      	nop
+ 80004e0:	e004      	b.n	80004ec <maquina2+0x2e4>
+			break;
+ 80004e2:	bf00      	nop
+ 80004e4:	e002      	b.n	80004ec <maquina2+0x2e4>
+			break;
+ 80004e6:	bf00      	nop
+ 80004e8:	e000      	b.n	80004ec <maquina2+0x2e4>
+			break;
+ 80004ea:	bf00      	nop
+}
+ 80004ec:	bf00      	nop
+ 80004ee:	3708      	adds	r7, #8
+ 80004f0:	46bd      	mov	sp, r7
+ 80004f2:	bd80      	pop	{r7, pc}
+ 80004f4:	20000028 	.word	0x20000028
+ 80004f8:	20000044 	.word	0x20000044
+ 80004fc:	20000040 	.word	0x20000040
+ 8000500:	2000002c 	.word	0x2000002c
+ 8000504:	20000000 	.word	0x20000000
+ 8000508:	20000048 	.word	0x20000048
+ 800050c:	20000034 	.word	0x20000034
+
+08000510 <Pins_Init>:
+void Pins_Init(void) {
+ 8000510:	b480      	push	{r7}
+ 8000512:	b083      	sub	sp, #12
+ 8000514:	af00      	add	r7, sp, #0
+    // 1. Habilitar reloj para GPIOD (Bit 3)
+    RCC->AHB1ENR |= (1 << 4);
+ 8000516:	4b36      	ldr	r3, [pc, #216]	@ (80005f0 <Pins_Init+0xe0>)
+ 8000518:	6b1b      	ldr	r3, [r3, #48]	@ 0x30
+ 800051a:	4a35      	ldr	r2, [pc, #212]	@ (80005f0 <Pins_Init+0xe0>)
+ 800051c:	f043 0310 	orr.w	r3, r3, #16
+ 8000520:	6313      	str	r3, [r2, #48]	@ 0x30
+    RCC->AHB1ENR |= (1 << 3);
+ 8000522:	4b33      	ldr	r3, [pc, #204]	@ (80005f0 <Pins_Init+0xe0>)
+ 8000524:	6b1b      	ldr	r3, [r3, #48]	@ 0x30
+ 8000526:	4a32      	ldr	r2, [pc, #200]	@ (80005f0 <Pins_Init+0xe0>)
+ 8000528:	f043 0308 	orr.w	r3, r3, #8
+ 800052c:	6313      	str	r3, [r2, #48]	@ 0x30
+
+    // 2. Configurar PD0 a PD3 como salidas (Filas)
+    //----->Tu trabajo aquí consiste en mejorar el código usando máscaras <----
+    GPIOE->MODER &= ~(0x3FFFC000); // Limpiar bits 7-14
+ 800052e:	4b31      	ldr	r3, [pc, #196]	@ (80005f4 <Pins_Init+0xe4>)
+ 8000530:	681b      	ldr	r3, [r3, #0]
+ 8000532:	4a30      	ldr	r2, [pc, #192]	@ (80005f4 <Pins_Init+0xe4>)
+ 8000534:	f023 537f 	bic.w	r3, r3, #1069547520	@ 0x3fc00000
+ 8000538:	f423 137f 	bic.w	r3, r3, #4177920	@ 0x3fc000
+ 800053c:	6013      	str	r3, [r2, #0]
+    GPIOE->MODER |= 0x15554000;    // Establecer como 01 (General purpose output)
+ 800053e:	4b2d      	ldr	r3, [pc, #180]	@ (80005f4 <Pins_Init+0xe4>)
+ 8000540:	681b      	ldr	r3, [r3, #0]
+ 8000542:	4a2c      	ldr	r2, [pc, #176]	@ (80005f4 <Pins_Init+0xe4>)
+ 8000544:	f043 53aa 	orr.w	r3, r3, #356515840	@ 0x15400000
+ 8000548:	f443 13aa 	orr.w	r3, r3, #1392640	@ 0x154000
+ 800054c:	6013      	str	r3, [r2, #0]
+    //Filas
+
+    GPIOD->MODER &= ~(0xFFFF0000); // Limpiar bits 8-15
+ 800054e:	4b2a      	ldr	r3, [pc, #168]	@ (80005f8 <Pins_Init+0xe8>)
+ 8000550:	681b      	ldr	r3, [r3, #0]
+ 8000552:	4a29      	ldr	r2, [pc, #164]	@ (80005f8 <Pins_Init+0xe8>)
+ 8000554:	b29b      	uxth	r3, r3
+ 8000556:	6013      	str	r3, [r2, #0]
+    GPIOD->MODER |= 0x55550000;    // Columnas
+ 8000558:	4b27      	ldr	r3, [pc, #156]	@ (80005f8 <Pins_Init+0xe8>)
+ 800055a:	681b      	ldr	r3, [r3, #0]
+ 800055c:	4a26      	ldr	r2, [pc, #152]	@ (80005f8 <Pins_Init+0xe8>)
+ 800055e:	f043 43aa 	orr.w	r3, r3, #1426063360	@ 0x55000000
+ 8000562:	f443 03aa 	orr.w	r3, r3, #5570560	@ 0x550000
+ 8000566:	6013      	str	r3, [r2, #0]
+
+    GPIOD->MODER &= ~(0x000000FF); // Limpiar bits 0-7
+ 8000568:	4b23      	ldr	r3, [pc, #140]	@ (80005f8 <Pins_Init+0xe8>)
+ 800056a:	681b      	ldr	r3, [r3, #0]
+ 800056c:	4a22      	ldr	r2, [pc, #136]	@ (80005f8 <Pins_Init+0xe8>)
+ 800056e:	f023 03ff 	bic.w	r3, r3, #255	@ 0xff
+ 8000572:	6013      	str	r3, [r2, #0]
+	GPIOD->MODER |= 0x00000055;    // Establecer como 01 (General purpose output)
+ 8000574:	4b20      	ldr	r3, [pc, #128]	@ (80005f8 <Pins_Init+0xe8>)
+ 8000576:	681b      	ldr	r3, [r3, #0]
+ 8000578:	4a1f      	ldr	r2, [pc, #124]	@ (80005f8 <Pins_Init+0xe8>)
+ 800057a:	f043 0355 	orr.w	r3, r3, #85	@ 0x55
+ 800057e:	6013      	str	r3, [r2, #0]
+
+
+	GPIOD->MODER &= ~(0x0000FF00); // Limpiar bits 8-15 (00 = Input)
+ 8000580:	4b1d      	ldr	r3, [pc, #116]	@ (80005f8 <Pins_Init+0xe8>)
+ 8000582:	681b      	ldr	r3, [r3, #0]
+ 8000584:	4a1c      	ldr	r2, [pc, #112]	@ (80005f8 <Pins_Init+0xe8>)
+ 8000586:	f423 437f 	bic.w	r3, r3, #65280	@ 0xff00
+ 800058a:	6013      	str	r3, [r2, #0]
+
+	// 4. Activar resistencias Pull-Up internas para PD4-PD7
+	GPIOD->PUPDR &= ~(0x0000FF00); // Limpiar registros PUPDR
+ 800058c:	4b1a      	ldr	r3, [pc, #104]	@ (80005f8 <Pins_Init+0xe8>)
+ 800058e:	68db      	ldr	r3, [r3, #12]
+ 8000590:	4a19      	ldr	r2, [pc, #100]	@ (80005f8 <Pins_Init+0xe8>)
+ 8000592:	f423 437f 	bic.w	r3, r3, #65280	@ 0xff00
+ 8000596:	60d3      	str	r3, [r2, #12]
+	GPIOD->PUPDR |= 0x00005500;    // Establecer como 01 (Pull-up)
+ 8000598:	4b17      	ldr	r3, [pc, #92]	@ (80005f8 <Pins_Init+0xe8>)
+ 800059a:	68db      	ldr	r3, [r3, #12]
+ 800059c:	4a16      	ldr	r2, [pc, #88]	@ (80005f8 <Pins_Init+0xe8>)
+ 800059e:	f443 43aa 	orr.w	r3, r3, #21760	@ 0x5500
+ 80005a2:	60d3      	str	r3, [r2, #12]
+
+
+    for (int i=7;i<15;i++){
+ 80005a4:	2307      	movs	r3, #7
+ 80005a6:	607b      	str	r3, [r7, #4]
+ 80005a8:	e008      	b.n	80005bc <Pins_Init+0xac>
+    	GPIOE->BSRR = (1 << (i + 16));
+ 80005aa:	687b      	ldr	r3, [r7, #4]
+ 80005ac:	3310      	adds	r3, #16
+ 80005ae:	2201      	movs	r2, #1
+ 80005b0:	409a      	lsls	r2, r3
+ 80005b2:	4b10      	ldr	r3, [pc, #64]	@ (80005f4 <Pins_Init+0xe4>)
+ 80005b4:	619a      	str	r2, [r3, #24]
+    for (int i=7;i<15;i++){
+ 80005b6:	687b      	ldr	r3, [r7, #4]
+ 80005b8:	3301      	adds	r3, #1
+ 80005ba:	607b      	str	r3, [r7, #4]
+ 80005bc:	687b      	ldr	r3, [r7, #4]
+ 80005be:	2b0e      	cmp	r3, #14
+ 80005c0:	ddf3      	ble.n	80005aa <Pins_Init+0x9a>
+    };
+    for (int i=8;i<16;i++){
+ 80005c2:	2308      	movs	r3, #8
+ 80005c4:	603b      	str	r3, [r7, #0]
+ 80005c6:	e008      	b.n	80005da <Pins_Init+0xca>
+        GPIOD->BSRR = (1 << (i + 16));
+ 80005c8:	683b      	ldr	r3, [r7, #0]
+ 80005ca:	3310      	adds	r3, #16
+ 80005cc:	2201      	movs	r2, #1
+ 80005ce:	409a      	lsls	r2, r3
+ 80005d0:	4b09      	ldr	r3, [pc, #36]	@ (80005f8 <Pins_Init+0xe8>)
+ 80005d2:	619a      	str	r2, [r3, #24]
+    for (int i=8;i<16;i++){
+ 80005d4:	683b      	ldr	r3, [r7, #0]
+ 80005d6:	3301      	adds	r3, #1
+ 80005d8:	603b      	str	r3, [r7, #0]
+ 80005da:	683b      	ldr	r3, [r7, #0]
+ 80005dc:	2b0f      	cmp	r3, #15
+ 80005de:	ddf3      	ble.n	80005c8 <Pins_Init+0xb8>
+        };
+}
+ 80005e0:	bf00      	nop
+ 80005e2:	bf00      	nop
+ 80005e4:	370c      	adds	r7, #12
+ 80005e6:	46bd      	mov	sp, r7
+ 80005e8:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80005ec:	4770      	bx	lr
+ 80005ee:	bf00      	nop
+ 80005f0:	40023800 	.word	0x40023800
+ 80005f4:	40021000 	.word	0x40021000
+ 80005f8:	40020c00 	.word	0x40020c00
+
+080005fc <Figuras>:
+void Figuras(void){
+ 80005fc:	b480      	push	{r7}
+ 80005fe:	af00      	add	r7, sp, #0
+	// Apaga todo antes de dibujar la nueva columna
+	                GPIOE->BSRR = (0xFFU << FIL_BASE);              // filas en alto -> LEDs apagados
+ 8000600:	4b16      	ldr	r3, [pc, #88]	@ (800065c <Figuras+0x60>)
+ 8000602:	f44f 42ff 	mov.w	r2, #32640	@ 0x7f80
+ 8000606:	619a      	str	r2, [r3, #24]
+	                GPIOD->BSRR = (0xFFU << (COL_BASE + 16));         // apaga todas las columnas
+ 8000608:	4b15      	ldr	r3, [pc, #84]	@ (8000660 <Figuras+0x64>)
+ 800060a:	f04f 427f 	mov.w	r2, #4278190080	@ 0xff000000
+ 800060e:	619a      	str	r2, [r3, #24]
+
+	                // Dibuja la columna actual
+	                GPIOE->BSRR = ((uint32_t)figura[b][col] << (FIL_BASE + 16));  // enciende filas del patrón
+ 8000610:	4b14      	ldr	r3, [pc, #80]	@ (8000664 <Figuras+0x68>)
+ 8000612:	681a      	ldr	r2, [r3, #0]
+ 8000614:	4b14      	ldr	r3, [pc, #80]	@ (8000668 <Figuras+0x6c>)
+ 8000616:	681b      	ldr	r3, [r3, #0]
+ 8000618:	4914      	ldr	r1, [pc, #80]	@ (800066c <Figuras+0x70>)
+ 800061a:	00d2      	lsls	r2, r2, #3
+ 800061c:	440a      	add	r2, r1
+ 800061e:	4413      	add	r3, r2
+ 8000620:	781b      	ldrb	r3, [r3, #0]
+ 8000622:	4a0e      	ldr	r2, [pc, #56]	@ (800065c <Figuras+0x60>)
+ 8000624:	05db      	lsls	r3, r3, #23
+ 8000626:	6193      	str	r3, [r2, #24]
+	                GPIOD->BSRR = (1U << (COL_BASE + col));                     // enciende esta columna
+ 8000628:	4b0f      	ldr	r3, [pc, #60]	@ (8000668 <Figuras+0x6c>)
+ 800062a:	681b      	ldr	r3, [r3, #0]
+ 800062c:	3308      	adds	r3, #8
+ 800062e:	4a0c      	ldr	r2, [pc, #48]	@ (8000660 <Figuras+0x64>)
+ 8000630:	2101      	movs	r1, #1
+ 8000632:	fa01 f303 	lsl.w	r3, r1, r3
+ 8000636:	6193      	str	r3, [r2, #24]
+
+	                col++;
+ 8000638:	4b0b      	ldr	r3, [pc, #44]	@ (8000668 <Figuras+0x6c>)
+ 800063a:	681b      	ldr	r3, [r3, #0]
+ 800063c:	3301      	adds	r3, #1
+ 800063e:	4a0a      	ldr	r2, [pc, #40]	@ (8000668 <Figuras+0x6c>)
+ 8000640:	6013      	str	r3, [r2, #0]
+
+
+
+	                if (col >= NUM_COLS) col = 0;
+ 8000642:	4b09      	ldr	r3, [pc, #36]	@ (8000668 <Figuras+0x6c>)
+ 8000644:	681b      	ldr	r3, [r3, #0]
+ 8000646:	2b07      	cmp	r3, #7
+ 8000648:	dd02      	ble.n	8000650 <Figuras+0x54>
+ 800064a:	4b07      	ldr	r3, [pc, #28]	@ (8000668 <Figuras+0x6c>)
+ 800064c:	2200      	movs	r2, #0
+ 800064e:	601a      	str	r2, [r3, #0]
+
+}
+ 8000650:	bf00      	nop
+ 8000652:	46bd      	mov	sp, r7
+ 8000654:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000658:	4770      	bx	lr
+ 800065a:	bf00      	nop
+ 800065c:	40021000 	.word	0x40021000
+ 8000660:	40020c00 	.word	0x40020c00
+ 8000664:	20000000 	.word	0x20000000
+ 8000668:	20000030 	.word	0x20000030
+ 800066c:	08000a70 	.word	0x08000a70
+
+08000670 <Keypad_Scan>:
+char Keypad_Scan(void) {
+ 8000670:	b490      	push	{r4, r7}
+ 8000672:	b086      	sub	sp, #24
+ 8000674:	af00      	add	r7, sp, #0
+    // Mapa de caracteres del teclado 4x4
+    const char keys[4][4] = {
+ 8000676:	4b82      	ldr	r3, [pc, #520]	@ (8000880 <Keypad_Scan+0x210>)
+ 8000678:	463c      	mov	r4, r7
+ 800067a:	cb0f      	ldmia	r3, {r0, r1, r2, r3}
+ 800067c:	e884 000f 	stmia.w	r4, {r0, r1, r2, r3}
+        {'4', '5', '6', 'B'},
+        {'7', '8', '9', 'C'},
+        {'*', '0', '#', 'D'}
+    };
+
+    for (int row = 0; row < 4; row++) {
+ 8000680:	2300      	movs	r3, #0
+ 8000682:	617b      	str	r3, [r7, #20]
+ 8000684:	e0f2      	b.n	800086c <Keypad_Scan+0x1fc>
+        // Poner las 4 filas en HIGH usando la mitad inferior de BSRR (Bits 0-3)
+        GPIOD->BSRR = 0x000F;
+ 8000686:	4b7f      	ldr	r3, [pc, #508]	@ (8000884 <Keypad_Scan+0x214>)
+ 8000688:	220f      	movs	r2, #15
+ 800068a:	619a      	str	r2, [r3, #24]
+
+    // Poner la fila actual en LOW usando la mitad superior de BSRR (Bits 16-19)
+        GPIOD->BSRR = (1 << (row + 16));
+ 800068c:	697b      	ldr	r3, [r7, #20]
+ 800068e:	3310      	adds	r3, #16
+ 8000690:	2201      	movs	r2, #1
+ 8000692:	409a      	lsls	r2, r3
+ 8000694:	4b7b      	ldr	r3, [pc, #492]	@ (8000884 <Keypad_Scan+0x214>)
+ 8000696:	619a      	str	r2, [r3, #24]
+
+        // Breve retardo para estabilización eléctrica de las señales
+        //--------Ya debes saber que esto es una MALA práctica--------
+        //--------------En algún momento debes corregirlo-------------
+        // Leer las columnas desplazando los bits al inicio (PD4-PD7 -> Bits 0-3)
+        uint16_t cols = (GPIOD->IDR >> 4) & 0x0F;
+ 8000698:	4b7a      	ldr	r3, [pc, #488]	@ (8000884 <Keypad_Scan+0x214>)
+ 800069a:	691b      	ldr	r3, [r3, #16]
+ 800069c:	091b      	lsrs	r3, r3, #4
+ 800069e:	b29b      	uxth	r3, r3
+ 80006a0:	f003 030f 	and.w	r3, r3, #15
+ 80006a4:	827b      	strh	r3, [r7, #18]
+
+        // Si el pin cae a LOW (0), indica que se conectó con la fila actual
+        if (!(cols & 0x01)) {
+ 80006a6:	8a7b      	ldrh	r3, [r7, #18]
+ 80006a8:	f003 0301 	and.w	r3, r3, #1
+ 80006ac:	2b00      	cmp	r3, #0
+ 80006ae:	d132      	bne.n	8000716 <Keypad_Scan+0xa6>
+        	if(keys[row][0]=='1') b=0;
+ 80006b0:	697b      	ldr	r3, [r7, #20]
+ 80006b2:	009b      	lsls	r3, r3, #2
+ 80006b4:	3318      	adds	r3, #24
+ 80006b6:	443b      	add	r3, r7
+ 80006b8:	f813 3c18 	ldrb.w	r3, [r3, #-24]
+ 80006bc:	2b31      	cmp	r3, #49	@ 0x31
+ 80006be:	d102      	bne.n	80006c6 <Keypad_Scan+0x56>
+ 80006c0:	4b71      	ldr	r3, [pc, #452]	@ (8000888 <Keypad_Scan+0x218>)
+ 80006c2:	2200      	movs	r2, #0
+ 80006c4:	601a      	str	r2, [r3, #0]
+        	if(keys[row][0]=='4') b=1;
+ 80006c6:	697b      	ldr	r3, [r7, #20]
+ 80006c8:	009b      	lsls	r3, r3, #2
+ 80006ca:	3318      	adds	r3, #24
+ 80006cc:	443b      	add	r3, r7
+ 80006ce:	f813 3c18 	ldrb.w	r3, [r3, #-24]
+ 80006d2:	2b34      	cmp	r3, #52	@ 0x34
+ 80006d4:	d102      	bne.n	80006dc <Keypad_Scan+0x6c>
+ 80006d6:	4b6c      	ldr	r3, [pc, #432]	@ (8000888 <Keypad_Scan+0x218>)
+ 80006d8:	2201      	movs	r2, #1
+ 80006da:	601a      	str	r2, [r3, #0]
+        	if(keys[row][0]=='7') b=2;
+ 80006dc:	697b      	ldr	r3, [r7, #20]
+ 80006de:	009b      	lsls	r3, r3, #2
+ 80006e0:	3318      	adds	r3, #24
+ 80006e2:	443b      	add	r3, r7
+ 80006e4:	f813 3c18 	ldrb.w	r3, [r3, #-24]
+ 80006e8:	2b37      	cmp	r3, #55	@ 0x37
+ 80006ea:	d102      	bne.n	80006f2 <Keypad_Scan+0x82>
+ 80006ec:	4b66      	ldr	r3, [pc, #408]	@ (8000888 <Keypad_Scan+0x218>)
+ 80006ee:	2202      	movs	r2, #2
+ 80006f0:	601a      	str	r2, [r3, #0]
+        	if(keys[row][0]=='*') b=3;
+ 80006f2:	697b      	ldr	r3, [r7, #20]
+ 80006f4:	009b      	lsls	r3, r3, #2
+ 80006f6:	3318      	adds	r3, #24
+ 80006f8:	443b      	add	r3, r7
+ 80006fa:	f813 3c18 	ldrb.w	r3, [r3, #-24]
+ 80006fe:	2b2a      	cmp	r3, #42	@ 0x2a
+ 8000700:	d102      	bne.n	8000708 <Keypad_Scan+0x98>
+ 8000702:	4b61      	ldr	r3, [pc, #388]	@ (8000888 <Keypad_Scan+0x218>)
+ 8000704:	2203      	movs	r2, #3
+ 8000706:	601a      	str	r2, [r3, #0]
+        	return keys[row][0];} // Columna 1
+ 8000708:	697b      	ldr	r3, [r7, #20]
+ 800070a:	009b      	lsls	r3, r3, #2
+ 800070c:	3318      	adds	r3, #24
+ 800070e:	443b      	add	r3, r7
+ 8000710:	f813 3c18 	ldrb.w	r3, [r3, #-24]
+ 8000714:	e0af      	b.n	8000876 <Keypad_Scan+0x206>
+        if (!(cols & 0x02)){
+ 8000716:	8a7b      	ldrh	r3, [r7, #18]
+ 8000718:	f003 0302 	and.w	r3, r3, #2
+ 800071c:	2b00      	cmp	r3, #0
+ 800071e:	d132      	bne.n	8000786 <Keypad_Scan+0x116>
+			if(keys[row][1]=='2') b=4;
+ 8000720:	697b      	ldr	r3, [r7, #20]
+ 8000722:	009b      	lsls	r3, r3, #2
+ 8000724:	3318      	adds	r3, #24
+ 8000726:	443b      	add	r3, r7
+ 8000728:	f813 3c17 	ldrb.w	r3, [r3, #-23]
+ 800072c:	2b32      	cmp	r3, #50	@ 0x32
+ 800072e:	d102      	bne.n	8000736 <Keypad_Scan+0xc6>
+ 8000730:	4b55      	ldr	r3, [pc, #340]	@ (8000888 <Keypad_Scan+0x218>)
+ 8000732:	2204      	movs	r2, #4
+ 8000734:	601a      	str	r2, [r3, #0]
+			if(keys[row][1]=='5') b=5;
+ 8000736:	697b      	ldr	r3, [r7, #20]
+ 8000738:	009b      	lsls	r3, r3, #2
+ 800073a:	3318      	adds	r3, #24
+ 800073c:	443b      	add	r3, r7
+ 800073e:	f813 3c17 	ldrb.w	r3, [r3, #-23]
+ 8000742:	2b35      	cmp	r3, #53	@ 0x35
+ 8000744:	d102      	bne.n	800074c <Keypad_Scan+0xdc>
+ 8000746:	4b50      	ldr	r3, [pc, #320]	@ (8000888 <Keypad_Scan+0x218>)
+ 8000748:	2205      	movs	r2, #5
+ 800074a:	601a      	str	r2, [r3, #0]
+			if(keys[row][1]=='8') b=6;
+ 800074c:	697b      	ldr	r3, [r7, #20]
+ 800074e:	009b      	lsls	r3, r3, #2
+ 8000750:	3318      	adds	r3, #24
+ 8000752:	443b      	add	r3, r7
+ 8000754:	f813 3c17 	ldrb.w	r3, [r3, #-23]
+ 8000758:	2b38      	cmp	r3, #56	@ 0x38
+ 800075a:	d102      	bne.n	8000762 <Keypad_Scan+0xf2>
+ 800075c:	4b4a      	ldr	r3, [pc, #296]	@ (8000888 <Keypad_Scan+0x218>)
+ 800075e:	2206      	movs	r2, #6
+ 8000760:	601a      	str	r2, [r3, #0]
+			if(keys[row][1]=='0') b=7;
+ 8000762:	697b      	ldr	r3, [r7, #20]
+ 8000764:	009b      	lsls	r3, r3, #2
+ 8000766:	3318      	adds	r3, #24
+ 8000768:	443b      	add	r3, r7
+ 800076a:	f813 3c17 	ldrb.w	r3, [r3, #-23]
+ 800076e:	2b30      	cmp	r3, #48	@ 0x30
+ 8000770:	d102      	bne.n	8000778 <Keypad_Scan+0x108>
+ 8000772:	4b45      	ldr	r3, [pc, #276]	@ (8000888 <Keypad_Scan+0x218>)
+ 8000774:	2207      	movs	r2, #7
+ 8000776:	601a      	str	r2, [r3, #0]
+        	return keys[row][1];} // Columna 2
+ 8000778:	697b      	ldr	r3, [r7, #20]
+ 800077a:	009b      	lsls	r3, r3, #2
+ 800077c:	3318      	adds	r3, #24
+ 800077e:	443b      	add	r3, r7
+ 8000780:	f813 3c17 	ldrb.w	r3, [r3, #-23]
+ 8000784:	e077      	b.n	8000876 <Keypad_Scan+0x206>
+        if (!(cols & 0x04)){
+ 8000786:	8a7b      	ldrh	r3, [r7, #18]
+ 8000788:	f003 0304 	and.w	r3, r3, #4
+ 800078c:	2b00      	cmp	r3, #0
+ 800078e:	d132      	bne.n	80007f6 <Keypad_Scan+0x186>
+        	if(keys[row][2]=='3') b=8;
+ 8000790:	697b      	ldr	r3, [r7, #20]
+ 8000792:	009b      	lsls	r3, r3, #2
+ 8000794:	3318      	adds	r3, #24
+ 8000796:	443b      	add	r3, r7
+ 8000798:	f813 3c16 	ldrb.w	r3, [r3, #-22]
+ 800079c:	2b33      	cmp	r3, #51	@ 0x33
+ 800079e:	d102      	bne.n	80007a6 <Keypad_Scan+0x136>
+ 80007a0:	4b39      	ldr	r3, [pc, #228]	@ (8000888 <Keypad_Scan+0x218>)
+ 80007a2:	2208      	movs	r2, #8
+ 80007a4:	601a      	str	r2, [r3, #0]
+			if(keys[row][2]=='6') b=9;
+ 80007a6:	697b      	ldr	r3, [r7, #20]
+ 80007a8:	009b      	lsls	r3, r3, #2
+ 80007aa:	3318      	adds	r3, #24
+ 80007ac:	443b      	add	r3, r7
+ 80007ae:	f813 3c16 	ldrb.w	r3, [r3, #-22]
+ 80007b2:	2b36      	cmp	r3, #54	@ 0x36
+ 80007b4:	d102      	bne.n	80007bc <Keypad_Scan+0x14c>
+ 80007b6:	4b34      	ldr	r3, [pc, #208]	@ (8000888 <Keypad_Scan+0x218>)
+ 80007b8:	2209      	movs	r2, #9
+ 80007ba:	601a      	str	r2, [r3, #0]
+			if(keys[row][2]=='9') b=10;
+ 80007bc:	697b      	ldr	r3, [r7, #20]
+ 80007be:	009b      	lsls	r3, r3, #2
+ 80007c0:	3318      	adds	r3, #24
+ 80007c2:	443b      	add	r3, r7
+ 80007c4:	f813 3c16 	ldrb.w	r3, [r3, #-22]
+ 80007c8:	2b39      	cmp	r3, #57	@ 0x39
+ 80007ca:	d102      	bne.n	80007d2 <Keypad_Scan+0x162>
+ 80007cc:	4b2e      	ldr	r3, [pc, #184]	@ (8000888 <Keypad_Scan+0x218>)
+ 80007ce:	220a      	movs	r2, #10
+ 80007d0:	601a      	str	r2, [r3, #0]
+			if(keys[row][2]=='#') b=11;
+ 80007d2:	697b      	ldr	r3, [r7, #20]
+ 80007d4:	009b      	lsls	r3, r3, #2
+ 80007d6:	3318      	adds	r3, #24
+ 80007d8:	443b      	add	r3, r7
+ 80007da:	f813 3c16 	ldrb.w	r3, [r3, #-22]
+ 80007de:	2b23      	cmp	r3, #35	@ 0x23
+ 80007e0:	d102      	bne.n	80007e8 <Keypad_Scan+0x178>
+ 80007e2:	4b29      	ldr	r3, [pc, #164]	@ (8000888 <Keypad_Scan+0x218>)
+ 80007e4:	220b      	movs	r2, #11
+ 80007e6:	601a      	str	r2, [r3, #0]
+        	return keys[row][2];} // Columna 3
+ 80007e8:	697b      	ldr	r3, [r7, #20]
+ 80007ea:	009b      	lsls	r3, r3, #2
+ 80007ec:	3318      	adds	r3, #24
+ 80007ee:	443b      	add	r3, r7
+ 80007f0:	f813 3c16 	ldrb.w	r3, [r3, #-22]
+ 80007f4:	e03f      	b.n	8000876 <Keypad_Scan+0x206>
+        if (!(cols & 0x08)){
+ 80007f6:	8a7b      	ldrh	r3, [r7, #18]
+ 80007f8:	f003 0308 	and.w	r3, r3, #8
+ 80007fc:	2b00      	cmp	r3, #0
+ 80007fe:	d132      	bne.n	8000866 <Keypad_Scan+0x1f6>
+        	if(keys[row][3]=='A') b=12;
+ 8000800:	697b      	ldr	r3, [r7, #20]
+ 8000802:	009b      	lsls	r3, r3, #2
+ 8000804:	3318      	adds	r3, #24
+ 8000806:	443b      	add	r3, r7
+ 8000808:	f813 3c15 	ldrb.w	r3, [r3, #-21]
+ 800080c:	2b41      	cmp	r3, #65	@ 0x41
+ 800080e:	d102      	bne.n	8000816 <Keypad_Scan+0x1a6>
+ 8000810:	4b1d      	ldr	r3, [pc, #116]	@ (8000888 <Keypad_Scan+0x218>)
+ 8000812:	220c      	movs	r2, #12
+ 8000814:	601a      	str	r2, [r3, #0]
+			if(keys[row][3]=='B') b=13;
+ 8000816:	697b      	ldr	r3, [r7, #20]
+ 8000818:	009b      	lsls	r3, r3, #2
+ 800081a:	3318      	adds	r3, #24
+ 800081c:	443b      	add	r3, r7
+ 800081e:	f813 3c15 	ldrb.w	r3, [r3, #-21]
+ 8000822:	2b42      	cmp	r3, #66	@ 0x42
+ 8000824:	d102      	bne.n	800082c <Keypad_Scan+0x1bc>
+ 8000826:	4b18      	ldr	r3, [pc, #96]	@ (8000888 <Keypad_Scan+0x218>)
+ 8000828:	220d      	movs	r2, #13
+ 800082a:	601a      	str	r2, [r3, #0]
+			if(keys[row][3]=='C') b=14;
+ 800082c:	697b      	ldr	r3, [r7, #20]
+ 800082e:	009b      	lsls	r3, r3, #2
+ 8000830:	3318      	adds	r3, #24
+ 8000832:	443b      	add	r3, r7
+ 8000834:	f813 3c15 	ldrb.w	r3, [r3, #-21]
+ 8000838:	2b43      	cmp	r3, #67	@ 0x43
+ 800083a:	d102      	bne.n	8000842 <Keypad_Scan+0x1d2>
+ 800083c:	4b12      	ldr	r3, [pc, #72]	@ (8000888 <Keypad_Scan+0x218>)
+ 800083e:	220e      	movs	r2, #14
+ 8000840:	601a      	str	r2, [r3, #0]
+			if(keys[row][3]=='D') b=15;
+ 8000842:	697b      	ldr	r3, [r7, #20]
+ 8000844:	009b      	lsls	r3, r3, #2
+ 8000846:	3318      	adds	r3, #24
+ 8000848:	443b      	add	r3, r7
+ 800084a:	f813 3c15 	ldrb.w	r3, [r3, #-21]
+ 800084e:	2b44      	cmp	r3, #68	@ 0x44
+ 8000850:	d102      	bne.n	8000858 <Keypad_Scan+0x1e8>
+ 8000852:	4b0d      	ldr	r3, [pc, #52]	@ (8000888 <Keypad_Scan+0x218>)
+ 8000854:	220f      	movs	r2, #15
+ 8000856:	601a      	str	r2, [r3, #0]
+        	return keys[row][3];} // Columna 4
+ 8000858:	697b      	ldr	r3, [r7, #20]
+ 800085a:	009b      	lsls	r3, r3, #2
+ 800085c:	3318      	adds	r3, #24
+ 800085e:	443b      	add	r3, r7
+ 8000860:	f813 3c15 	ldrb.w	r3, [r3, #-21]
+ 8000864:	e007      	b.n	8000876 <Keypad_Scan+0x206>
+    for (int row = 0; row < 4; row++) {
+ 8000866:	697b      	ldr	r3, [r7, #20]
+ 8000868:	3301      	adds	r3, #1
+ 800086a:	617b      	str	r3, [r7, #20]
+ 800086c:	697b      	ldr	r3, [r7, #20]
+ 800086e:	2b03      	cmp	r3, #3
+ 8000870:	f77f af09 	ble.w	8000686 <Keypad_Scan+0x16>
+    }
+
+    return '\0'; // Retorna nulo si ninguna tecla fue presionada
+ 8000874:	2300      	movs	r3, #0
+}
+ 8000876:	4618      	mov	r0, r3
+ 8000878:	3718      	adds	r7, #24
+ 800087a:	46bd      	mov	sp, r7
+ 800087c:	bc90      	pop	{r4, r7}
+ 800087e:	4770      	bx	lr
+ 8000880:	08000a60 	.word	0x08000a60
+ 8000884:	40020c00 	.word	0x40020c00
+ 8000888:	20000000 	.word	0x20000000
+
+0800088c <SysTick_Init>:
+void SysTick_Init(void) {
+ 800088c:	b480      	push	{r7}
+ 800088e:	af00      	add	r7, sp, #0
+    // 16 MHz / 1000 = 16000 ticks por milisegundo
+    SysTick->LOAD = 16000 - 1;
+ 8000890:	4b07      	ldr	r3, [pc, #28]	@ (80008b0 <SysTick_Init+0x24>)
+ 8000892:	f643 627f 	movw	r2, #15999	@ 0x3e7f
+ 8000896:	605a      	str	r2, [r3, #4]
+
+    // Limpiar el valor actual
+    SysTick->VAL = 0;
+ 8000898:	4b05      	ldr	r3, [pc, #20]	@ (80008b0 <SysTick_Init+0x24>)
+ 800089a:	2200      	movs	r2, #0
+ 800089c:	609a      	str	r2, [r3, #8]
+
+    // Habilitar SysTick, su interrupción, y usar el reloj del procesador
+    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk |
+ 800089e:	4b04      	ldr	r3, [pc, #16]	@ (80008b0 <SysTick_Init+0x24>)
+ 80008a0:	2207      	movs	r2, #7
+ 80008a2:	601a      	str	r2, [r3, #0]
+                    SysTick_CTRL_TICKINT_Msk |
+                    SysTick_CTRL_ENABLE_Msk;
+}
+ 80008a4:	bf00      	nop
+ 80008a6:	46bd      	mov	sp, r7
+ 80008a8:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80008ac:	4770      	bx	lr
+ 80008ae:	bf00      	nop
+ 80008b0:	e000e010 	.word	0xe000e010
+
+080008b4 <SysTick_Handler>:
+void SysTick_Handler(void) {
+ 80008b4:	b480      	push	{r7}
+ 80008b6:	af00      	add	r7, sp, #0
+    ms_ticks++;
+ 80008b8:	4b04      	ldr	r3, [pc, #16]	@ (80008cc <SysTick_Handler+0x18>)
+ 80008ba:	681b      	ldr	r3, [r3, #0]
+ 80008bc:	3301      	adds	r3, #1
+ 80008be:	4a03      	ldr	r2, [pc, #12]	@ (80008cc <SysTick_Handler+0x18>)
+ 80008c0:	6013      	str	r3, [r2, #0]
+}
+ 80008c2:	bf00      	nop
+ 80008c4:	46bd      	mov	sp, r7
+ 80008c6:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80008ca:	4770      	bx	lr
+ 80008cc:	20000028 	.word	0x20000028
+
+080008d0 <Keypad_Read_Debounced>:
+char Keypad_Read_Debounced(void) {
+ 80008d0:	b580      	push	{r7, lr}
+ 80008d2:	b082      	sub	sp, #8
+ 80008d4:	af00      	add	r7, sp, #0
+    char raw_key = Keypad_Scan();
+ 80008d6:	f7ff fecb 	bl	8000670 <Keypad_Scan>
+ 80008da:	4603      	mov	r3, r0
+ 80008dc:	71bb      	strb	r3, [r7, #6]
+    char validated_key = '\0';
+ 80008de:	2300      	movs	r3, #0
+ 80008e0:	71fb      	strb	r3, [r7, #7]
+
+    switch (current_state) {
+ 80008e2:	4b2e      	ldr	r3, [pc, #184]	@ (800099c <Keypad_Read_Debounced+0xcc>)
+ 80008e4:	781b      	ldrb	r3, [r3, #0]
+ 80008e6:	2b03      	cmp	r3, #3
+ 80008e8:	d853      	bhi.n	8000992 <Keypad_Read_Debounced+0xc2>
+ 80008ea:	a201      	add	r2, pc, #4	@ (adr r2, 80008f0 <Keypad_Read_Debounced+0x20>)
+ 80008ec:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 80008f0:	08000901 	.word	0x08000901
+ 80008f4:	0800091d 	.word	0x0800091d
+ 80008f8:	0800094b 	.word	0x0800094b
+ 80008fc:	08000961 	.word	0x08000961
+        case STATE_IDLE:
+            if (raw_key != '\0') {
+ 8000900:	79bb      	ldrb	r3, [r7, #6]
+ 8000902:	2b00      	cmp	r3, #0
+ 8000904:	d03e      	beq.n	8000984 <Keypad_Read_Debounced+0xb4>
+                last_valid_key = raw_key;
+ 8000906:	4a26      	ldr	r2, [pc, #152]	@ (80009a0 <Keypad_Read_Debounced+0xd0>)
+ 8000908:	79bb      	ldrb	r3, [r7, #6]
+ 800090a:	7013      	strb	r3, [r2, #0]
+                debounce_timer = ms_ticks; // Registrar marca de tiempo
+ 800090c:	4b25      	ldr	r3, [pc, #148]	@ (80009a4 <Keypad_Read_Debounced+0xd4>)
+ 800090e:	681b      	ldr	r3, [r3, #0]
+ 8000910:	4a25      	ldr	r2, [pc, #148]	@ (80009a8 <Keypad_Read_Debounced+0xd8>)
+ 8000912:	6013      	str	r3, [r2, #0]
+                current_state = STATE_DEBOUNCE_PRESS;
+ 8000914:	4b21      	ldr	r3, [pc, #132]	@ (800099c <Keypad_Read_Debounced+0xcc>)
+ 8000916:	2201      	movs	r2, #1
+ 8000918:	701a      	strb	r2, [r3, #0]
+            }
+            break;
+ 800091a:	e033      	b.n	8000984 <Keypad_Read_Debounced+0xb4>
+
+        case STATE_DEBOUNCE_PRESS:
+            // Si han pasado 20ms
+            if ((ms_ticks - debounce_timer) >= DEBOUNCE_DELAY_MS) {
+ 800091c:	4b21      	ldr	r3, [pc, #132]	@ (80009a4 <Keypad_Read_Debounced+0xd4>)
+ 800091e:	681a      	ldr	r2, [r3, #0]
+ 8000920:	4b21      	ldr	r3, [pc, #132]	@ (80009a8 <Keypad_Read_Debounced+0xd8>)
+ 8000922:	681b      	ldr	r3, [r3, #0]
+ 8000924:	1ad3      	subs	r3, r2, r3
+ 8000926:	2b13      	cmp	r3, #19
+ 8000928:	d92e      	bls.n	8000988 <Keypad_Read_Debounced+0xb8>
+                if (raw_key == last_valid_key) {
+ 800092a:	4b1d      	ldr	r3, [pc, #116]	@ (80009a0 <Keypad_Read_Debounced+0xd0>)
+ 800092c:	781b      	ldrb	r3, [r3, #0]
+ 800092e:	79ba      	ldrb	r2, [r7, #6]
+ 8000930:	429a      	cmp	r2, r3
+ 8000932:	d106      	bne.n	8000942 <Keypad_Read_Debounced+0x72>
+                    validated_key = last_valid_key; // ¡Tecla validada!
+ 8000934:	4b1a      	ldr	r3, [pc, #104]	@ (80009a0 <Keypad_Read_Debounced+0xd0>)
+ 8000936:	781b      	ldrb	r3, [r3, #0]
+ 8000938:	71fb      	strb	r3, [r7, #7]
+                    current_state = STATE_PRESSED;
+ 800093a:	4b18      	ldr	r3, [pc, #96]	@ (800099c <Keypad_Read_Debounced+0xcc>)
+ 800093c:	2202      	movs	r2, #2
+ 800093e:	701a      	strb	r2, [r3, #0]
+                } else {
+                    // Fue un pico de ruido o se soltó rápido
+                    current_state = STATE_IDLE;
+                }
+            }
+            break;
+ 8000940:	e022      	b.n	8000988 <Keypad_Read_Debounced+0xb8>
+                    current_state = STATE_IDLE;
+ 8000942:	4b16      	ldr	r3, [pc, #88]	@ (800099c <Keypad_Read_Debounced+0xcc>)
+ 8000944:	2200      	movs	r2, #0
+ 8000946:	701a      	strb	r2, [r3, #0]
+            break;
+ 8000948:	e01e      	b.n	8000988 <Keypad_Read_Debounced+0xb8>
+
+        case STATE_PRESSED:
+            if (raw_key == '\0') {
+ 800094a:	79bb      	ldrb	r3, [r7, #6]
+ 800094c:	2b00      	cmp	r3, #0
+ 800094e:	d11d      	bne.n	800098c <Keypad_Read_Debounced+0xbc>
+                debounce_timer = ms_ticks;
+ 8000950:	4b14      	ldr	r3, [pc, #80]	@ (80009a4 <Keypad_Read_Debounced+0xd4>)
+ 8000952:	681b      	ldr	r3, [r3, #0]
+ 8000954:	4a14      	ldr	r2, [pc, #80]	@ (80009a8 <Keypad_Read_Debounced+0xd8>)
+ 8000956:	6013      	str	r3, [r2, #0]
+                current_state = STATE_DEBOUNCE_RELEASE;
+ 8000958:	4b10      	ldr	r3, [pc, #64]	@ (800099c <Keypad_Read_Debounced+0xcc>)
+ 800095a:	2203      	movs	r2, #3
+ 800095c:	701a      	strb	r2, [r3, #0]
+            }
+            break;
+ 800095e:	e015      	b.n	800098c <Keypad_Read_Debounced+0xbc>
+
+        case STATE_DEBOUNCE_RELEASE:
+            if ((ms_ticks - debounce_timer) >= DEBOUNCE_DELAY_MS) {
+ 8000960:	4b10      	ldr	r3, [pc, #64]	@ (80009a4 <Keypad_Read_Debounced+0xd4>)
+ 8000962:	681a      	ldr	r2, [r3, #0]
+ 8000964:	4b10      	ldr	r3, [pc, #64]	@ (80009a8 <Keypad_Read_Debounced+0xd8>)
+ 8000966:	681b      	ldr	r3, [r3, #0]
+ 8000968:	1ad3      	subs	r3, r2, r3
+ 800096a:	2b13      	cmp	r3, #19
+ 800096c:	d910      	bls.n	8000990 <Keypad_Read_Debounced+0xc0>
+                if (raw_key == '\0') {
+ 800096e:	79bb      	ldrb	r3, [r7, #6]
+ 8000970:	2b00      	cmp	r3, #0
+ 8000972:	d103      	bne.n	800097c <Keypad_Read_Debounced+0xac>
+                    current_state = STATE_IDLE; // Liberación confirmada
+ 8000974:	4b09      	ldr	r3, [pc, #36]	@ (800099c <Keypad_Read_Debounced+0xcc>)
+ 8000976:	2200      	movs	r2, #0
+ 8000978:	701a      	strb	r2, [r3, #0]
+                } else {
+                    current_state = STATE_PRESSED; // Rebote al soltar
+                }
+            }
+            break;
+ 800097a:	e009      	b.n	8000990 <Keypad_Read_Debounced+0xc0>
+                    current_state = STATE_PRESSED; // Rebote al soltar
+ 800097c:	4b07      	ldr	r3, [pc, #28]	@ (800099c <Keypad_Read_Debounced+0xcc>)
+ 800097e:	2202      	movs	r2, #2
+ 8000980:	701a      	strb	r2, [r3, #0]
+            break;
+ 8000982:	e005      	b.n	8000990 <Keypad_Read_Debounced+0xc0>
+            break;
+ 8000984:	bf00      	nop
+ 8000986:	e004      	b.n	8000992 <Keypad_Read_Debounced+0xc2>
+            break;
+ 8000988:	bf00      	nop
+ 800098a:	e002      	b.n	8000992 <Keypad_Read_Debounced+0xc2>
+            break;
+ 800098c:	bf00      	nop
+ 800098e:	e000      	b.n	8000992 <Keypad_Read_Debounced+0xc2>
+            break;
+ 8000990:	bf00      	nop
+    }
+
+    return validated_key; // Solo retorna el char una vez por pulsación
+ 8000992:	79fb      	ldrb	r3, [r7, #7]
+}
+ 8000994:	4618      	mov	r0, r3
+ 8000996:	3708      	adds	r7, #8
+ 8000998:	46bd      	mov	sp, r7
+ 800099a:	bd80      	pop	{r7, pc}
+ 800099c:	2000003c 	.word	0x2000003c
+ 80009a0:	20000049 	.word	0x20000049
+ 80009a4:	20000028 	.word	0x20000028
+ 80009a8:	20000040 	.word	0x20000040
+
+080009ac <Reset_Handler>:
+
+  .section .text.Reset_Handler
+  .weak Reset_Handler
+  .type Reset_Handler, %function
+Reset_Handler:
+  ldr   r0, =_estack
+ 80009ac:	480d      	ldr	r0, [pc, #52]	@ (80009e4 <LoopForever+0x2>)
+  mov   sp, r0          /* set stack pointer */
+ 80009ae:	4685      	mov	sp, r0
+/* Call the clock system initialization function.*/
+  bl  SystemInit
+ 80009b0:	f3af 8000 	nop.w
+
+/* Copy the data segment initializers from flash to SRAM */
+  ldr r0, =_sdata
+ 80009b4:	480c      	ldr	r0, [pc, #48]	@ (80009e8 <LoopForever+0x6>)
+  ldr r1, =_edata
+ 80009b6:	490d      	ldr	r1, [pc, #52]	@ (80009ec <LoopForever+0xa>)
+  ldr r2, =_sidata
+ 80009b8:	4a0d      	ldr	r2, [pc, #52]	@ (80009f0 <LoopForever+0xe>)
+  movs r3, #0
+ 80009ba:	2300      	movs	r3, #0
+  b LoopCopyDataInit
+ 80009bc:	e002      	b.n	80009c4 <LoopCopyDataInit>
+
+080009be <CopyDataInit>:
+
+CopyDataInit:
+  ldr r4, [r2, r3]
+ 80009be:	58d4      	ldr	r4, [r2, r3]
+  str r4, [r0, r3]
+ 80009c0:	50c4      	str	r4, [r0, r3]
+  adds r3, r3, #4
+ 80009c2:	3304      	adds	r3, #4
+
+080009c4 <LoopCopyDataInit>:
+
+LoopCopyDataInit:
+  adds r4, r0, r3
+ 80009c4:	18c4      	adds	r4, r0, r3
+  cmp r4, r1
+ 80009c6:	428c      	cmp	r4, r1
+  bcc CopyDataInit
+ 80009c8:	d3f9      	bcc.n	80009be <CopyDataInit>
+
+/* Zero fill the bss segment. */
+  ldr r2, =_sbss
+ 80009ca:	4a0a      	ldr	r2, [pc, #40]	@ (80009f4 <LoopForever+0x12>)
+  ldr r4, =_ebss
+ 80009cc:	4c0a      	ldr	r4, [pc, #40]	@ (80009f8 <LoopForever+0x16>)
+  movs r3, #0
+ 80009ce:	2300      	movs	r3, #0
+  b LoopFillZerobss
+ 80009d0:	e001      	b.n	80009d6 <LoopFillZerobss>
+
+080009d2 <FillZerobss>:
+
+FillZerobss:
+  str  r3, [r2]
+ 80009d2:	6013      	str	r3, [r2, #0]
+  adds r2, r2, #4
+ 80009d4:	3204      	adds	r2, #4
+
+080009d6 <LoopFillZerobss>:
+
+LoopFillZerobss:
+  cmp r2, r4
+ 80009d6:	42a2      	cmp	r2, r4
+  bcc FillZerobss
+ 80009d8:	d3fb      	bcc.n	80009d2 <FillZerobss>
+
+
+/* Call static constructors */
+  bl __libc_init_array
+ 80009da:	f000 f811 	bl	8000a00 <__libc_init_array>
+/* Call the application's entry point.*/
+
+  bl main
+ 80009de:	f7ff fbf3 	bl	80001c8 <main>
+
+080009e2 <LoopForever>:
+
+LoopForever:
+  b LoopForever
+ 80009e2:	e7fe      	b.n	80009e2 <LoopForever>
+  ldr   r0, =_estack
+ 80009e4:	20020000 	.word	0x20020000
+  ldr r0, =_sdata
+ 80009e8:	20000000 	.word	0x20000000
+  ldr r1, =_edata
+ 80009ec:	2000000c 	.word	0x2000000c
+  ldr r2, =_sidata
+ 80009f0:	08000b20 	.word	0x08000b20
+  ldr r2, =_sbss
+ 80009f4:	2000000c 	.word	0x2000000c
+  ldr r4, =_ebss
+ 80009f8:	2000004c 	.word	0x2000004c
+
+080009fc <ADC_IRQHandler>:
+ * @retval : None
+*/
+  .section .text.Default_Handler,"ax",%progbits
+Default_Handler:
+Infinite_Loop:
+  b Infinite_Loop
+ 80009fc:	e7fe      	b.n	80009fc <ADC_IRQHandler>
+	...
+
+08000a00 <__libc_init_array>:
+ 8000a00:	b570      	push	{r4, r5, r6, lr}
+ 8000a02:	4b0d      	ldr	r3, [pc, #52]	@ (8000a38 <__libc_init_array+0x38>)
+ 8000a04:	4d0d      	ldr	r5, [pc, #52]	@ (8000a3c <__libc_init_array+0x3c>)
+ 8000a06:	1b5b      	subs	r3, r3, r5
+ 8000a08:	109c      	asrs	r4, r3, #2
+ 8000a0a:	2600      	movs	r6, #0
+ 8000a0c:	42a6      	cmp	r6, r4
+ 8000a0e:	d109      	bne.n	8000a24 <__libc_init_array+0x24>
+ 8000a10:	f000 f81a 	bl	8000a48 <_init>
+ 8000a14:	4d0a      	ldr	r5, [pc, #40]	@ (8000a40 <__libc_init_array+0x40>)
+ 8000a16:	4b0b      	ldr	r3, [pc, #44]	@ (8000a44 <__libc_init_array+0x44>)
+ 8000a18:	1b5b      	subs	r3, r3, r5
+ 8000a1a:	109c      	asrs	r4, r3, #2
+ 8000a1c:	2600      	movs	r6, #0
+ 8000a1e:	42a6      	cmp	r6, r4
+ 8000a20:	d105      	bne.n	8000a2e <__libc_init_array+0x2e>
+ 8000a22:	bd70      	pop	{r4, r5, r6, pc}
+ 8000a24:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8000a28:	4798      	blx	r3
+ 8000a2a:	3601      	adds	r6, #1
+ 8000a2c:	e7ee      	b.n	8000a0c <__libc_init_array+0xc>
+ 8000a2e:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8000a32:	4798      	blx	r3
+ 8000a34:	3601      	adds	r6, #1
+ 8000a36:	e7f2      	b.n	8000a1e <__libc_init_array+0x1e>
+ 8000a38:	08000b18 	.word	0x08000b18
+ 8000a3c:	08000b18 	.word	0x08000b18
+ 8000a40:	08000b18 	.word	0x08000b18
+ 8000a44:	08000b1c 	.word	0x08000b1c
+
+08000a48 <_init>:
+ 8000a48:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8000a4a:	bf00      	nop
+ 8000a4c:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8000a4e:	bc08      	pop	{r3}
+ 8000a50:	469e      	mov	lr, r3
+ 8000a52:	4770      	bx	lr
+
+08000a54 <_fini>:
+ 8000a54:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8000a56:	bf00      	nop
+ 8000a58:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8000a5a:	bc08      	pop	{r3}
+ 8000a5c:	469e      	mov	lr, r3
+ 8000a5e:	4770      	bx	lr
