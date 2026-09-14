@@ -114,17 +114,7 @@ stateDiagram-v2
 | Matriz | Filas F0–F7 | **PE7 – PE14** (salida push-pull) |
 | Matriz | Columnas C0–C7 | **PD8 – PD15** (salida push-pull) |
 
-**Nota importante de diseño:** el teclado y la matriz comparten el puerto **GPIOD**, pero en bytes distintos — el teclado usa el byte bajo (bits 0-7) y la matriz usa el byte alto (bits 8-15). Esto es intencional y correcto (no hay conflicto eléctrico), pero vale la pena documentarlo explícitamente porque no es evidente a simple vista al ver `RCC->AHB1ENR` habilitando "GPIOD" una sola vez para ambos usos.
+**Nota importante:** el teclado y la matriz comparten el puerto **GPIOD**, pero en bytes distintos — el teclado usa el byte bajo (bits 0-7) y la matriz usa el byte alto (bits 8-15). Esto es intencional y correcto (no hay conflicto eléctrico), pero vale la pena documentarlo explícitamente porque no es evidente a simple vista al ver `RCC->AHB1ENR` habilitando "GPIOD" una sola vez para ambos usos.
 
 ---
 
-## Observación menor sobre el código (no bloquea la entrega)
-
-En `maquina2()`, la variable local `char tecla;` no se inicializa, y solo se le asigna un valor cuando `h==0`:
-
-```c
-char tecla;
-if(h==0) tecla = Keypad_Read_Debounced();
-```
-
-Cuando `h==1`, `tecla` queda sin inicializar. En la práctica esto **no causa un bug real**, porque el diseño de la máquina de estados garantiza que `h` solo vale `1` cuando `estado` está en `estado_error`, `estado_correcto`, `estado_peligro` o `easter_egg` — ninguno de esos `case` lee la variable `tecla`. Aun así, es una buena práctica inicializarla explícitamente (`char tecla = '\0';`) para eliminar cualquier ambigüedad de comportamiento indefinido a ojos del compilador, y para que el análisis estático de tu IDE no lo marque como advertencia.
